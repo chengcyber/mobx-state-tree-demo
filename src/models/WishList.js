@@ -25,6 +25,9 @@ export const WishList = types.model({
     items: types.optional(types.array(WishListItem), []),
 }).actions(self => ({
     add(item) { self.items.push(item) },
+    batchAdd(items) {
+      self.items.push(...items)
+    },
     remove(item) {
         // self.items.splice(self.items.indexOf(item), 1)
         destroy(item)

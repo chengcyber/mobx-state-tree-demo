@@ -2,9 +2,23 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import WishListView from './components/WishListView'
+import { values } from 'mobx'
 
 class App extends Component {
+  state = {
+    selectedUser: null
+  }
+
+  onChangeSelect = (e) => {
+    this.setState({
+      selectedUser: e.target.value,
+    })
+  }
   render() {
+    const {
+      group,
+    } = this.props
+    const selectedUser = group.users.get(this.state.selectedUser)
     return (
       <div className="App">
         <header className="App-header">
@@ -22,7 +36,19 @@ class App extends Component {
           </a>
         </header>
         <section>
-          <WishListView wishList={this.props.wishList} />
+          <select onChange={this.onChangeSelect}>
+            <option>- select user -</option>
+              {values(group.users).map((user, i) =>
+                <option key={i} value={user.id}>{user.name}</option>)
+              }
+          </select>
+          {selectedUser &&
+            <WishListView wishList={selectedUser.wishList} />
+          }
+          {
+            selectedUser &&
+              <button onClick={selectedUser.getSuggestions}>Suggestions</button>
+          }
         </section>
       </div>
     );
