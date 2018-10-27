@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import WishListView from './components/WishListView'
 
 class App extends Component {
   render() {
@@ -20,6 +21,9 @@ class App extends Component {
             Learn React
           </a>
         </header>
+        <section>
+          <WishListView wishList={this.props.wishList} />
+        </section>
       </div>
     );
   }
